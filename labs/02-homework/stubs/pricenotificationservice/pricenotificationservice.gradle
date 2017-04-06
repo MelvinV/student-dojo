@@ -1,0 +1,14 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'com.bol.pricenotificationservice.PriceNotificationServiceApplication'
+run {
+    args 'server', 'src/dist/pricenotificationservice.yaml'
+}
+
+dependencies {
+    compile 'io.dropwizard:dropwizard-core:1.1.0'
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-xml-provider:2.8.7"
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.7"
+    testCompile 'junit:junit:4.12'
+}
