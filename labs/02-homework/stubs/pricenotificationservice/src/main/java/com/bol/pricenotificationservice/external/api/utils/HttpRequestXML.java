@@ -25,7 +25,7 @@ public class HttpRequestXML<T> {
         this.typeClass = typeClass;
     }
 
-    public T callnew(String url)
+    public T get(String url)
     {
         T result = null;
 

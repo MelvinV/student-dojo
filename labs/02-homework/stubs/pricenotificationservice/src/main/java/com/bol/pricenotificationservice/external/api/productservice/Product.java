@@ -1,9 +1,13 @@
-package com.bol.productservice.api;
+package com.bol.pricenotificationservice.external.api.productservice;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Created by melvin on 9-4-2017.
+ */
 public class Product {
+
     private String ean;
     private String name;
     private BigDecimal suggestedRetailPrice, consumerPrice;

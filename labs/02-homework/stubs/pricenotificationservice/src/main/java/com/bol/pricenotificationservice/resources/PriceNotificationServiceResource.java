@@ -2,6 +2,7 @@ package com.bol.pricenotificationservice.resources;
 
 import com.bol.pricenotificationservice.api.Notification;
 import com.bol.pricenotificationservice.api.NotificationList;
+import com.bol.pricenotificationservice.external.api.productservice.ProductAPI;
 import com.bol.pricenotificationservice.jdbi.PriceNotificationDao;
 import com.codahale.metrics.annotation.Timed;
 
@@ -31,7 +32,8 @@ public class PriceNotificationServiceResource {
     @Path("customer/{customerNumber}/notifications/{ean}")
     @Timed
     public void addNotification(Notification notification, @PathParam("customerNumber") Long customerNumber, @PathParam("ean") String ean) {
-        priceNotificationDao.addNotification(customerNumber, notification);
+        if(ProductAPI.getProductByEan(notification.getEan()) != null)
+            priceNotificationDao.addNotification(customerNumber, notification);
     }
 
     @DELETE

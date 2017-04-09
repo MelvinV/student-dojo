@@ -21,5 +21,6 @@ public class PriceNotificationServiceApplication extends Application<PriceNotifi
         PriceNotificationDao customerDao = new PriceNotificationDao();
         environment.jersey().register(new PriceNotificationServiceResource(customerDao));
         environment.healthChecks().register("api.v1", new V1ApiHealthCheck());
+        new PriceNotificationService().start();
     }
 }

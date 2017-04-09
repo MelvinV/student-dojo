@@ -12,6 +12,6 @@ public class CustomerAPI {
     public static Customer getCustomerById(Long customerNumber)
     {
         String url = String.format("http://localhost:8280/v1/customer/%d", customerNumber);
-        return httpRequestHandler.callnew(url);
+        return httpRequestHandler.get(url);
     }
 }
