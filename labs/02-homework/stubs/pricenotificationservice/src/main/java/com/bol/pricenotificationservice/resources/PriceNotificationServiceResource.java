@@ -1,14 +1,12 @@
 package com.bol.pricenotificationservice.resources;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
 import com.bol.pricenotificationservice.api.Notification;
 import com.bol.pricenotificationservice.api.NotificationList;
 import com.bol.pricenotificationservice.jdbi.PriceNotificationDao;
 import com.codahale.metrics.annotation.Timed;
 
-import java.util.Arrays;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @Path("/v1")
 @Produces(MediaType.APPLICATION_XML)
@@ -25,7 +23,7 @@ public class PriceNotificationServiceResource {
     @Timed
     public NotificationList getNotifications(@PathParam("customerNumber") Long customerNumber) {
         NotificationList notificationList = new NotificationList();
-        notificationList.setNotifications(Arrays.asList()/*priceNotificationDao.getProducts()*/);
+        notificationList.setNotifications(priceNotificationDao.getNotifications(customerNumber));
         return notificationList;
     }
 

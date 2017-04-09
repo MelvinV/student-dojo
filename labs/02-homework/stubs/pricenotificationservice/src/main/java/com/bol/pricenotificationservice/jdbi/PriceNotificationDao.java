@@ -1,25 +1,48 @@
 package com.bol.pricenotificationservice.jdbi;
 
 import com.bol.pricenotificationservice.api.Notification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bol.pricenotificationservice.external.api.customerservice.Customer;
+import com.bol.pricenotificationservice.external.api.customerservice.CustomerAPI;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PriceNotificationDao {
 
-    private final List<Notification> notifications = new ArrayList<>();
+    private Map<Long, List<Notification>> notificationsPerCustomer = new HashMap<>();
+
+    public PriceNotificationDao()
+    {
+        initializeStubPriceNotifications();
+    }
+
+    private void initializeStubPriceNotifications()
+    {
+        Customer customer = CustomerAPI.getCustomerById(100000L);
+    }
 
     public void addNotification(Long customerNumber, Notification notification)
     {
+        List<Notification> notifications = new ArrayList<>();
+
+        if(notificationsPerCustomer.containsKey(customerNumber))
+        {
+            notifications = notificationsPerCustomer.get(customerNumber);
+            List<Notification> test = notifications.stream().filter(x -> x.getEan().equals(notification.getEan()))
+                                                            .collect(Collectors.toList());
+            notifications.removeAll(test);
+        }
+
         notifications.add(notification);
+        notificationsPerCustomer.put(customerNumber, notifications);
+    }
+
+    public List<Notification> getNotifications(Long customerNumber)
+    {
+        return notificationsPerCustomer.get(customerNumber);
     }
 
     /*

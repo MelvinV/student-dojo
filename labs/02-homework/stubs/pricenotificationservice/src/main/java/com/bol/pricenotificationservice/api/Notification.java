@@ -13,6 +13,9 @@ public class Notification {
         this.price = price;
     }
 
+    public Notification() {
+    }
+
     public String getEan() {
         return ean;
     }
